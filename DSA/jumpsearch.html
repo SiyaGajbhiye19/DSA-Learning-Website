@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login with Hero Animation</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+  <style>
+    /* Reset and Box-Sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Body and Background */
+    body {
+      background-image: url('desktop_size_image.jpg'); /* Using the uploaded image */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      color: white;
+      gap: 50px;
+      padding-top: 50px;
+      position: relative;
+      overflow: hidden; /* Prevent animation overflow */
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    .navbar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: color 0.3s, background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+      color: black;
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid black;
+    }
+
+    /* Heading Container */
+    .heading-container {
+      margin-top: 80px; /* Added margin-top to move it below the navbar */
+      background: rgba(255, 255, 255, 0.7); /* Transparent white background */
+      backdrop-filter: blur(10px); /* Blur effect */
+      padding: 20px 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h1, h2 {
+      color: #222;
+      margin: 10px 0;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    /* Flex container for content (buttons) */
+    .content-container {
+      display: flex;
+      justify-content: center; /* Center the buttons */
+      align-items: center;
+      flex-wrap: nowrap; /* Prevent wrapping to the next row */
+      gap: 40px; /* Increased space between buttons */
+      width: 100%;
+      overflow-x: auto; /* Allow horizontal scrolling if needed */
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .content-container p {
+      font-size: 2rem;
+      font-weight: bold;
+      color: black; /* Set text color to black */
+      margin-bottom: 10px; /* Adjust this margin to align the text above the buttons */
+    }
+
+    .content {
+      flex: 1 1 auto;
+      max-width: 200px;
+      min-width: 180px;
+      height: 200px;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.8rem;
+      color: white; /* Text color changed to black */
+      cursor: pointer;
+      border: none;
+      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.7); /* Darker transparent black */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .content:hover {
+      transform: scale(1.2);
+      z-index: 10;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.8); /* Darker transparent black on hover */
+      color: white; /* Ensure text remains white on hover */
+    }
+    
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    /* Animation and Bubble Styles */
+    .hero {
+      background: linear-gradient(135deg, rgba(167, 199, 231, 0.8), rgba(234, 239, 242, 0.8), rgba(131, 180, 176, 0.8));
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1; /* Send animation to the background */
+    }
+
+    .cube {
+      position: absolute;
+      top: 80vh;
+      left: 45vw;
+      width: 10px;
+      height: 10px;
+      border: solid 1px rgba(131, 180, 176, 0.8);
+      transform-origin: top left;
+      transform: scale(0) rotate(0deg) translate(-50%, -50%);
+      animation: cube 6s ease-in forwards infinite;
+    }
+
+    .cube:nth-child(2n) {
+      border-color: rgba(96, 125, 139, 0.8);
+    }
+
+    .cube:nth-child(2) {
+      animation-delay: 1s;
+      left: 25vw;
+      top: 40vh;
+    }
+
+    .cube:nth-child(3) {
+      animation-delay: 2s;
+      left: 75vw;
+      top: 50vh;
+    }
+
+    .cube:nth-child(4) {
+      animation-delay: 3s;
+      left: 90vw;
+      top: 10vh;
+    }
+
+    .cube:nth-child(5) {
+      animation-delay: 4s;
+      left: 10vw;
+      top: 85vh;
+    }
+
+    .cube:nth-child(6) {
+      animation-delay: 5s;
+      left: 50vw;
+      top: 10vh;
+    }
+
+    @keyframes cube {
+      from {
+        transform: scale(0) rotate(0deg) translate(-50%, -50%);
+        opacity: 1;
+      }
+      to {
+        transform: scale(20) rotate(960deg) translate(-50%, -50%);
+        opacity: 0;
+      }
+    }
+    /* Tree Container Section */
+    .tree-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      margin: 50px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 1400px;
+    }
+    .container {
+      flex: 1 1 calc(33.33% - 30px); /* Adjusted to make containers more responsive */
+      min-width: 400px; /* Set a reasonable min width */
+      background: rgba(255, 255, 255, 0.8); /* Transparent white */
+      backdrop-filter: blur(10px); /* Blur effect for transparency */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Box shadow */
+      border-radius: 15px; /* Rounded corners */
+      padding: 20px;
+      text-align: center;
+      color: #222;
+    }
+
+    .container h3 {
+      font-size: 2rem; /* Increased font size */
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .container p {
+      font-size: 1.2rem; /* Better readability for descriptions */
+      color: #555;
+      line-height: 1.8; /* Increased line spacing */
+    }
+
+    pre {
+      font-size: 1.1rem; /* Larger font size for code */
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 10px;
+      color: #333;
+      overflow-x: auto; /* Allow horizontal scrolling for long lines */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+      text-align: left; /* Align steps to the left for readability */
+      font-size: 1.1rem; /* Increased font size */
+      line-height: 1.6;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex: 1 1 100%; /* Full width on smaller screens */
+      }
+    }
+    /* Animation for Containers */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Apply animation on containers */
+.container {
+    flex: 1 1 calc(30% - 20px); /* Adjusted to take up 50% of the width */
+  min-width: 400px; /* Increased minimum width */
+
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  color: #222;
+  opacity: 0; /* Start invisible */
+  animation: fadeInUp 0.8s forwards; /* Applying fadeInUp animation */
+}
+
+.container:nth-child(1) {
+  animation-delay: 0.5s; /* Delay for the first container */
+}
+
+.container:nth-child(2) {
+  animation-delay: 1s; /* Delay for the second container */
+}
+
+.container:nth-child(3) {
+  animation-delay: 1.5s; /* Delay for the third container */
+}
+
+/* Code container specific animation */
+.container h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.container pre {
+  font-size: 1.1rem;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 10px;
+  color: #333;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+/* Description and Example Text Animation */
+.container p, .container ul {
+  animation: fadeIn 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+.container ul {
+  list-style: disc;
+  margin-left: 20px;
+  padding-left: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+  opacity: 0;
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+/* Example input and output sections */
+.container pre, .container p {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+/* Adding a slight delay for better effect */
+.container pre {
+  font-size: 1.1rem;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 10px;
+  color: #333;
+  overflow-x: auto; /* Allow horizontal scrolling for long lines */
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 1000px; /* Adjust the height to fit your design */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container p {
+  animation-delay: 2s;
+}
+.bubble-sort-heading {
+  font-size: 2.5rem;
+  color: #222;
+  text-align: center;
+  margin-top: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0; /* Start with the heading hidden */
+  animation: fadeInUp 1s ease-out forwards, bounce 1s ease-in-out 1s; /* Apply both fade-in and bounce animations */
+}
+
+/* Animation to fade in the heading */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for bounce effect */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); /* Bounce upwards */
+  }
+}
+    .bubble-sort-heading h2 {
+  font-size: 1.5rem; /* Larger font size for emphasis */
+  color: #222; /* Dark color for the heading */
+  background: rgba(255, 255, 255, 0.8); /* Transparent background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+    .heading-container {
+      text-align: center;
+      margin-bottom: 20px; /* Space between heading and content */
+    }
+
+    .heading-container h2 {
+      font-size: 2.5rem;
+      color: #222;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Cascade</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      
+    </ul>
+  </nav>
+  <!-- Hero Animation -->
+  <div class="hero">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+  <div class="bubble-sort-heading">Jump Search</div>
+  <!-- Tree Containers -->
+  <div class="tree-container">
+    <div class="container">
+      <h3>Code</h3>
+      <pre>
+        # include &lt;stdio,h&gt;
+        #include &lt;stdio.h&gt; 
+            #include &lt;math.h&gt;
+            
+            int min(int a, int b) {
+                return (b > a) ? a : b;
+            }
+            
+            int jumpsearch(int arr[], int x, int n) {
+                int step = sqrt(n);
+                int prev = 0;
+                
+                while (arr[min(step, n) - 1] < x) {
+                    prev = step;
+                    step += sqrt(n);
+                    if (prev >= n)
+                        return -1;
+                }
+                
+                while (arr[prev] < x) {
+                    prev++;
+                    if (prev == min(step, n))
+                        return -1;
+                }
+                
+                if (arr[prev] == x)
+                    return prev;
+                
+                return -1;
+            }
+            
+            int main() {
+                int n, x;
+                
+                printf("Enter the number of elements: ");
+                scanf("%d", &n);
+                
+                int arr[n];
+                
+                printf("Enter %d elements in sorted order: ", n);
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+                
+                printf("Enter the number to search: ");
+                scanf("%d", &x);
+                
+                int index = jumpsearch(arr, x, n);
+                if (index >= 0)
+                    printf("Number is at index %d\n", index);
+                else
+                    printf("Number does not exist in the array\n");
+                
+                return 0;
+            }
+              
+            
+      </pre>
+    </div>
+    <div class="container">
+        <h3>Description</h3>
+        <p> Jump Search is a searching algorithm for sorted arrays. The basic idea is to check fewer elements (than linear search) by jumping ahead by fixed steps or skipping some elements in place of searching all elements.</p>
+        <p>Steps:</p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li style="margin-bottom: 10px;">Input Array Size (n) from the user.</li>
+          <li style="margin-bottom: 10px;">Input Sorted Array Elements from the user.</li>
+          <li style="margin-bottom: 10px;">Input Element (x) to search.</li>
+        </ul>
+        <p>Jump Search Algorithm (jumpsearch function):</p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li style="margin-bottom: 10px;">Calculate the step size as √N.</li>
+          <li style="margin-bottom: 10px;">Jump forward in blocks of √N until the block where x might exist is found.</li>
+          <li style="margin-bottom: 10px;">Perform a linear search inside that block.</li>
+          <li style="margin-bottom: 10px;">If x is found, return its index; otherwise, return -1.</li>
+        </ul>
+        <p>Output the Result</p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li style="margin-bottom: 10px;">If x is found, print its index..</li>
+          <li style="margin-bottom: 10px;">If x is not found, print "Number does not exist in the array."</li>
+        </ul>
+        <p>Time Complexity:</p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li style="margin-bottom: 10px;">Best Case: O(1) 
+            Worst Case: O(√N) 
+            Average Case: O(√N)</li>
+        </ul>
+      </div>
+      
+      <div class="container">
+        <h3>Example</h3>
+        <p>Input:</p>
+        <pre>arr[] = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 }
+            We are searching for x = 13.</pre>
+        <p>Step-by-Step Process of Jump Search:</p>
+        <p><strong>Calculate Step Size:</strong></p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li>step = sqrt(n) = sqrt(10) ≈ 3</li>
+          <li>Initial values: prev = 0, step = 3</li>
+          </ul>
+          <p><strong>Jump in Blocks:</strong></p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li>Check arr[2] = 5, but 5 < 13, so move ahead.</li>
+          <li>Jump to arr[5] = 11, but 11 < 13, so move ahead.</li>
+          <li>Jump to arr[8] = 17, but 17 > 13, so stop.</li>
+          <li>The target 13 must be between arr[5] and arr[8].</li>
+          </ul>
+          <p><strong>Perform Linear Search in Block [5,8]:</strong></p>
+        <ul style="list-style: disc; margin-left: 20px; padding-left: 0;">
+          <li>arr[6] = 13 (Match found!)</li>
+          <li>Return index 6.</li>
+          </ul>
+        
+        <p>Output:</p>
+        <pre>Enter the number of elements: 10
+            Enter 10 elements in sorted order: 1 3 5 7 9 11 13 15 17 19
+            Enter the number to search: 13
+            Number is at index 6 </pre>
+      </div>
+
+</body>
+</html>

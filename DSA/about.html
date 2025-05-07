@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us with Animation</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+  <style>
+    /* Reset and Box-Sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Body and Background */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: url('desktop_size_image.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(167, 199, 231, 0.8), rgba(234, 239, 242, 0.8), rgba(131, 180, 176, 0.8));
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .cube {
+      position: absolute;
+      top: 80vh;
+      left: 45vw;
+      width: 10px;
+      height: 10px;
+      border: solid 1px rgba(131, 180, 176, 0.8);
+      transform-origin: top left;
+      transform: scale(0) rotate(0deg) translate(-50%, -50%);
+      animation: cube 6s ease-in forwards infinite;
+    }
+
+    .cube:nth-child(2n) {
+      border-color: rgba(96, 125, 139, 0.8);
+    }
+
+    .cube:nth-child(2) {
+      animation-delay: 1s;
+      left: 25vw;
+      top: 40vh;
+    }
+
+    .cube:nth-child(3) {
+      animation-delay: 2s;
+      left: 75vw;
+      top: 50vh;
+    }
+
+    .cube:nth-child(4) {
+      animation-delay: 3s;
+      left: 90vw;
+      top: 10vh;
+    }
+
+    .cube:nth-child(5) {
+      animation-delay: 4s;
+      left: 10vw;
+      top: 85vh;
+    }
+
+    .cube:nth-child(6) {
+      animation-delay: 5s;
+      left: 50vw;
+      top: 10vh;
+    }
+
+    @keyframes cube {
+      from {
+        transform: scale(0) rotate(0deg) translate(-50%, -50%);
+        opacity: 1;
+      }
+      to {
+        transform: scale(20) rotate(960deg) translate(-50%, -50%);
+        opacity: 0;
+      }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: color 0.3s, background-color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+      color: black;
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid black;
+    }
+
+    .wrapper {
+      width: 400px;
+      background: rgba(255, 255, 255, 0.7); /* Transparent gradient effect */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .about-section {
+      font-family: "Times New Roman", Times, serif;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.6);
+      color: black;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      width: 95%;
+      max-width: 1000px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      z-index: 1;
+    }
+
+    .column {
+      flex: 1 1 calc(100% - 40px);
+      max-width: 350px;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%; /* Ensures the image container expands horizontally */
+      height: 300px; /* Reduced height for a more compact look */
+      object-fit: cover; /* Keeps the image proportional */
+    }
+
+    .container {
+      padding: 15px;
+      text-align: center;
+      color: black;
+    }
+
+    .container h2 {
+      font-weight: bold;
+      margin: 10px 0;
+      font-size: 20px;
+    }
+
+    .button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #ffcc00;
+      color: black;
+    }
+
+    @media (max-width: 768px) {
+      .card img {
+        height: 200px; /* Reduced height for smaller screens */
+      }
+
+      .about-section {
+        width: 95%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card img {
+        height: 150px; /* Adjusted height for very small screens */
+      }
+    }
+    
+  </style>
+  
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Cascade</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      
+    </ul>
+  </nav>
+
+  <!-- Hero Section for Background Animation -->
+  <div class="hero">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-section">
+    <h1 style="font-weight: bold;">Simplifying Data Structures for Everyone</h1>
+    <p><strong>Unlock the power of data structures effortlessly.</strong></p>
+    <p><strong>At DS Simplified, we aim to make complex concepts easy to grasp, helping students and professionals navigate the world of data structures with ease. Our mission is to provide accessible resources that save time and accelerate learning.</strong></p>
+    <p><strong>What We Offer:</strong> <br>
+      <strong>Comprehensive Explanations:</strong> Simplified guides to help you understand key data structure concepts and their implementations. <br>
+      <strong>Ready-to-Use Code:</strong> Access pre-written, well-documented code snippets for every data structure. <br>
+      <strong>Practical Applications:</strong> Learn through real-world examples and use cases for every data structure you explore. <br>
+      <strong>Interactive Learning:</strong> Engage with visual demonstrations and step-by-step guides for better understanding.
+    </p>
+  </div>
+
+  <!-- Team Info -->
+  <h2 class="team">Creater</h2>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <img src="siyaimg.jpg" alt="Siya Gajbhiye">
+        <div class="container">
+            <h2>Siya Gajbhiye</h2>
+            <p>Website Developer</p>
+            <p>siyagajbhiye509@gmail.com</p>
+            <p><a href="mailto:siyagajbhiye509@gmail.com" class="button">Contact</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
